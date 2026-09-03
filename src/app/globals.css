@@ -1,97 +1,642 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "tailwindcss";
+
 /* ==========================================
-   🌐 1. สไตล์ระบบหลัก (Minimalist Navbar)
+   🌸 GLOBAL
    ========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fff7fb;
+  color: #4d3542;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ==========================================
+   🎀 NAVBAR
+   ========================================== */
+
 .siteHeader {
-  background-color: #ffffff;
-  border-bottom: 1px solid #fdf2f8; /* ขอบชมพูบางมาก */
-  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 2px solid #ffd6e7;
+
+  box-shadow: 0 4px 20px rgba(214, 51, 132, 0.08);
+
+  backdrop-filter: blur(12px);
 }
 
 .navbar {
+  max-width: 1250px;
+  min-height: 72px;
+
+  margin: 0 auto;
+  padding: 0 30px;
+
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  text-decoration: none;
+  color: #d63384;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  transition: 0.25s ease;
+}
+
+.logo:hover {
+  color: #ec4899;
+  transform: scale(1.04);
 }
 
 .navList {
   display: flex;
-  list-style: none;
-  gap: 24px;
+  align-items: center;
+  gap: 8px;
+
+  list-style: none !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.navList li {
+  list-style: none !important;
   margin: 0;
   padding: 0;
 }
 
 .navLink {
-  text-decoration: none;
-  color: #f472b6; /* ชมพูมินิมอลอ่อนโยน */
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  transition: all 0.2s ease;
+  display: block;
+
+  padding: 9px 16px;
+
+  border-radius: 20px;
+
+  text-decoration: none !important;
+
+  color: #765568;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
 }
 
 .navLink:hover {
-  color: #db2777; /* ชมพูเข้มขึ้นเล็กน้อยเวลาเมาส์ชี้ */
-  text-decoration: none;
-  opacity: 0.8;
-} 
+  color: #d63384;
+
+  background: #ffe7f1;
+
+  transform: translateY(-2px);
+}
+
 
 /* ==========================================
-   🎵 2. สไตล์วงดนตรี (ธีมขาว-ชมพู มินิมอล)
+   💗 BANDS PAGE
    ========================================== */
 
-/* จัดโครงสร้างกลุ่ม Grid วงดนตรี */
+.bands-page {
+  min-height: 100vh;
+
+  padding: 60px 30px 80px;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(255, 190, 220, 0.35),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(255, 220, 235, 0.45),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #fff7fb 50%,
+      #ffeaf4 100%
+    );
+}
+
+
+/* ==========================================
+   🌷 PAGE HEADER
+   ========================================== */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.small-title {
+  display: inline-block;
+
+  padding: 8px 18px;
+  margin-bottom: 14px;
+
+  border-radius: 30px;
+
+  background: #ffe1ed;
+  color: #d94b8b;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+.page-header h1 {
+  margin: 0;
+
+  color: #c93678;
+
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 900;
+
+  letter-spacing: -0.03em;
+}
+
+.page-header p {
+  margin: 8px 0 18px;
+
+  color: #a66c86;
+
+  font-size: 18px;
+
+  letter-spacing: 0.12em;
+}
+
+.pink-line {
+  width: 70px;
+  height: 5px;
+
+  margin: auto;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    90deg,
+    #f9a8d4,
+    #ec4899
+  );
+}
+
+
+/* ==========================================
+   🎵 BAND GRID
+   ========================================== */
+
 .band-grid {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 32px;
-  margin-top: 30px;
-}
-
-/* ปรับจำนวนคอลัมน์บนจอ Tablet และ Desktop */
-@media (min-width: 768px) {
-  .band-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 1024px) {
-  .band-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-/* ตกแต่งกล่องการ์ด - เน้นพื้นหลังขาวสะอาด ตัดขอบชมพูเรียบๆ */
-.band-card {
-  background-color: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #fae8ff; /* เส้นขอบชมพูพาสเทลจางพิเศษ */
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(251, 207, 232, 0.1); /* เงามินิมอลสีชมพูบางเบา */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* เอฟเฟกต์นุ่มนวลตอนเมาส์ชี้ */
-.band-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(251, 207, 232, 0.2);
-  border-color: #fbcfe8;
-}
-
-/* จัดสัดส่วนรูปภาพวงหลัก - ขอบมนสไตล์มินิมอล */
-.band-card img:first-of-type {
   width: 100%;
-  height: 190px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 18px;
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(340px, 1fr)
+  );
+
+  gap: 32px;
 }
 
-/* บล็อกแสดงแนวเพลงสไตล์มินิมอล */
+
+/* ==========================================
+   💿 BAND CARD
+   ========================================== */
+
+.band-card {
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid #ffd1e3;
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 10px 35px rgba(214, 51, 132, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.band-card:hover {
+  transform: translateY(-10px);
+
+  border-color: #f39ac0;
+
+  box-shadow:
+    0 22px 50px rgba(214, 51, 132, 0.18);
+}
+
+
+/* ==========================================
+   📸 BAND IMAGE
+   ========================================== */
+
+.band-image {
+  position: relative !important;
+
+  width: 100% !important;
+  height: 250px !important;
+
+  overflow: hidden !important;
+
+  border-radius: 28px 28px 0 0;
+}
+
+.band-image > img {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+
+  transition: transform 0.5s ease;
+}
+
+.band-card:hover .band-image > img {
+  transform: scale(1.06);
+}
+
+.image-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(75, 20, 45, 0.45),
+      transparent 55%
+    );
+}
+
+.band-number {
+  position: absolute;
+
+  top: 18px;
+  left: 18px;
+
+  z-index: 3;
+
+  padding: 7px 13px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  color: #d63384;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  backdrop-filter: blur(5px);
+}
+
+
+/* ==========================================
+   🎤 BAND CONTENT
+   ========================================== */
+
+.band-content {
+  padding: 25px;
+}
+
+.band-heading {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.band-heading h2 {
+  margin: 10px 0 0;
+
+  color: #c93678;
+
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.heart {
+  font-size: 32px;
+
+  color: #f29abb;
+
+  transition: transform 0.25s ease;
+}
+
+.band-card:hover .heart {
+  transform: scale(1.2) rotate(-8deg);
+}
+
+
+/* ==========================================
+   🌸 GENRE
+   ========================================== */
+
 .band-badge {
-  background-color: #fff5f5; 
-  color: #f472b6;
+  display: inline-block;
+
+  padding: 6px 13px;
+
+  border-radius: 20px;
+
+  background: #ffe4ef;
+
+  color: #d63384;
+
+  border: 1px solid #ffc9df;
+
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  padding: 2px 10px;
-  border-radius: 6px;
-  border: 1px solid #ffe4e6;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* ==========================================
+   📝 DESCRIPTION
+   ========================================== */
+
+.description {
+  margin: 18px 0 25px;
+
+  color: #765968;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* ==========================================
+   👥 MEMBERS
+   ========================================== */
+
+.members-section {
+  border-top: 1px solid #f8dce8;
+
+  padding-top: 20px;
+}
+
+.members-title {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 12px;
+
+  color: #d63384;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+}
+
+.member-count {
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: #fff0f6;
+
+  color: #a55a7b;
+
+  font-size: 11px;
+
+  letter-spacing: 0;
+}
+
+
+/* ==========================================
+   📋 MEMBER TABLE
+   ========================================== */
+
+.member-table {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border: 1px solid #f8dce8;
+
+  border-radius: 18px;
+
+  background: #fffafd;
+}
+
+.member-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  border-bottom: 1px solid #f9e5ed;
+
+  transition: all 0.25s ease;
+}
+
+.member-row:last-child {
+  border-bottom: none;
+}
+
+.member-row:hover {
+  background: #fff0f6;
+
+  transform: translateX(4px);
+}
+
+
+/* ==========================================
+   👤 MEMBER INFO
+   ========================================== */
+
+.member-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.member-avatar {
+  position: relative;
+
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  border: 3px solid #ffd0e2;
+
+  box-shadow:
+    0 4px 12px rgba(214, 51, 132, 0.15);
+}
+
+.member-avatar > img {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+}
+
+.member-text {
+  min-width: 0;
+}
+
+.member-name {
+  color: #563444;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.member-fullname {
+  margin-top: 3px;
+
+  color: #a3788d;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* ==========================================
+   🎸 ROLE
+   ========================================== */
+
+.member-role {
+  flex-shrink: 0;
+
+  max-width: 130px;
+
+  padding: 6px 10px;
+
+  border-radius: 10px;
+
+  background: #ffe7f0;
+
+  color: #c33d78;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* ==========================================
+   📱 MOBILE
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    min-height: auto;
+
+    padding: 14px 16px;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .navList {
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .navLink {
+    padding: 7px 10px;
+
+    font-size: 13px;
+  }
+
+  .bands-page {
+    padding: 40px 16px 60px;
+  }
+
+  .band-grid {
+    grid-template-columns: 1fr;
+
+    gap: 22px;
+  }
+
+  .band-image {
+    height: 210px !important;
+  }
+
+  .band-content {
+    padding: 20px;
+  }
+
+  .band-heading h2 {
+    font-size: 26px;
+  }
+
+  .member-row {
+    align-items: flex-start;
+  }
+
+  .member-role {
+    max-width: 100px;
+  }
 }
