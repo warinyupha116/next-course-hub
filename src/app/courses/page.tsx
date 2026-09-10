@@ -1,36 +1,283 @@
-type Course = {
+"use client";
+
+import { useState } from 'react';
+import Image from 'next/image';
+
+export type Member = {
   id: number;
-  code: string;
-  title: string;
-  credits: number;
-  isOpen: boolean;
+  name: string;
+  fullName: string;
+  role: string;
+  avatar: string;
 };
 
-const courses: Course[] = [
-  { id: 1, code: "10301231", title: "Web Technology", credits: 3, isOpen: true },
-  { id: 2, code: "10301232", title: "Database Systems", credits: 3, isOpen: false },
-  { id: 3, code: "10301233", title: "Software Engineering", credits: 3, isOpen: true },
-  { id: 4, code: "10301234", title: "Data Structures", credits: 4, isOpen: true },
-  { id: 5, code: "10301235", title: "Computer Networks", credits: 3, isOpen: false },
+export type Band = {
+  id: number;
+  name: string;
+  genre: string;
+  description: string;
+  image: string;
+  members: Member[];
+};
+
+export type BandProps = {
+  band: Band;
+  isFavorite?: boolean;
+  likes?: number;
+  onToggleFavorite?: (id: number) => void;
+  onLike?: (id: number) => void;
+};
+
+const bandsData: Band[] = [
+  {
+    id: 1,
+    name: 'Cocktail',
+    genre: 'Classic Rock',
+    description: 'วงร็อกที่มีเอกลักษณ์ผสมผสานวงออร์เคสตรา',
+    image: '/images/bands/cocktail.jpg',
+    members: [
+      { id: 1, name: 'โอม', fullName: 'ปัณฑพล ประสารราชกิจ', role: 'ร้องนำ', avatar: '/images/bands/members/ohm.jpg' },
+      { id: 2, name: 'เชาว์', fullName: 'ชวรัตน์ หลิววโรพาส', role: 'กีตาร์', avatar: '/images/bands/members/chao.jpg' },
+      { id: 3, name: 'ปาร์ค', fullName: 'เกริกเกียรติ สว่างวงศ์', role: 'เบส', avatar: '/images/bands/members/park.jpg' },
+      { id: 4, name: 'ฟิลิปส์', fullName: 'ฟิลิปส์ เปรมสิริธร', role: 'กลอง', avatar: '/images/bands/members/philip.jpg' },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Tilly Birds',
+    genre: 'Alternative Rock',
+    description: 'วงออลเทอร์นาทีฟร็อกเจ้าของเพลงฮิตติดหูมากมาย',
+    image: '/images/bands/tillybirds.jpg',
+    members: [
+      { id: 1, name: 'เติร์ด', fullName: 'อนุโรจน์ เกตุเลขา', role: 'ร้องนำ', avatar: '/images/bands/members/third.webp' },
+      { id: 2, name: 'บิลลี่', fullName: 'ณัฐดนัย ชูชาติ', role: 'กีตาร์ / โปรดิวเซอร์', avatar: '/images/bands/members/billy.jpg' },
+      { id: 3, name: 'ไมโล', fullName: 'ธุวานนท์ ตันติโชติ', role: 'กลอง', avatar: '/images/bands/members/milo.jpg' },
+    ],
+  },
+  {
+    id: 3,
+    name: 'PiXXiE',
+    genre: 'T-Pop',
+    description: 'วงเกิร์ลกรุ๊ป T-Pop คุณภาพที่มีเสน่ห์และความสามารถโดดเด่น',
+    image: '/images/bands/pixxie.jpg',
+    members: [
+      { id: 1, name: 'มาเบล', fullName: 'สุชาดา สอนพันธ์', role: 'ร้องหลัก / ภาพลักษณ์วง', avatar: '/images/bands/members/mabel2.jpg' },
+      { id: 2, name: 'พิมมา', fullName: 'พิมพ์มาดา ใจพันธ์', role: 'เต้นหลัก / แร็ปหลัก', avatar: '/images/bands/members/pimma.jpg' },
+      { id: 3, name: 'อิงโกะ', fullName: 'อินท์ปาลี โชติหิรัญธนนนท์', role: 'ร้องเสียงหลัก', avatar: '/images/bands/members/ingkho.jpg' },
+    ],
+  },
 ];
 
-export default function CoursesPage() {
+function BandCard({
+  band,
+  isFavorite = false,
+  likes = 0,
+  onToggleFavorite,
+  onLike,
+}: BandProps) {
   return (
-    <main className="page" style={{ padding: '20px' }}>
-      <h1>รายวิชาทั้งหมด</h1>
+    <article className="band-card">
 
-      <section className="courseGrid">
-        {courses.map((course) => (
-          <article key={course.id} className="courseCard" style={{ marginBottom: '20px', borderBottom: '1px solid #ccc' }}>
-            <h2>{course.title}</h2>
-            <p>รหัสวิชา: {course.code}</p>
-            <p>{course.credits} หน่วยกิต</p>
-            <p>
-              {course.isOpen ? "เปิดลงทะเบียน" : "ปิดลงทะเบียน"}
-            </p>
-          </article>
-        ))}
+      {/* รูปวง */}
+      <div className="band-image">
+        <Image
+          src={band.image}
+          alt={band.name}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+        <div className="image-overlay" />
+        <span className="band-number">
+          #{String(band.id).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* ข้อมูลวง */}
+      <div className="band-content">
+
+        <div className="band-heading">
+          <div>
+            <span className="band-badge">{band.genre}</span>
+            <h2>{band.name}</h2>
+          </div>
+          <button
+            type="button"
+            className="heart"
+            onClick={() => onToggleFavorite?.(band.id)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: isFavorite ? '#ff4d4f' : 'inherit',
+            }}
+          >
+            {isFavorite ? '♥' : '♡'}
+          </button>
+        </div>
+
+        <p className="description">
+          {band.description}
+        </p>
+
+        {/* ส่วนกดใจ (Like) และแสดงจำนวน Likes */}
+        <div className="like-section" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
+          <button
+            type="button"
+            className="like-button"
+            onClick={() => onLike?.(band.id)}
+            style={{
+              padding: '6px 14px',
+              borderRadius: '20px',
+              border: '1px solid #ddd',
+              backgroundColor: '#fff',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}
+          >
+            ❤️ กดใจ
+          </button>
+          <span className="like-count" style={{ fontSize: '0.9rem', color: '#666' }}>
+            {likes} Like{likes !== 1 ? 's' : ''}
+          </span>
+        </div>
+
+        {/* ตารางสมาชิก */}
+        <div className="members-section">
+
+          <div className="members-title">
+            <span>MEMBERS</span>
+            <span className="member-count">
+              {band.members.length} คน
+            </span>
+          </div>
+
+          <div className="member-table">
+
+            {band.members.map((member) => (
+              <div className="member-row" key={member.id}>
+
+                <div className="member-info">
+
+                  <div className="member-avatar">
+                    <Image
+                      src={member.avatar}
+                      alt={member.name}
+                      fill
+                      sizes="52px"
+                    />
+                  </div>
+
+                  <div className="member-text">
+                    <div className="member-name">
+                      {member.name}
+                    </div>
+
+                    <div className="member-fullname">
+                      {member.fullName}
+                    </div>
+                  </div>
+
+                </div>
+
+                <span className="member-role">
+                  {member.role}
+                </span>
+
+              </div>
+            ))}
+
+          </div>
+        </div>
+
+      </div>
+    </article>
+  );
+}
+
+export default function BandsPage() {
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+  const [likesMap, setLikesMap] = useState<Record<number, number>>({});
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  function handleToggleFavorite(id: number) {
+    setFavoriteIds((prev) =>
+      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+    );
+  }
+
+  function handleLike(id: number) {
+    setLikesMap((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 0) + 1,
+    }));
+  }
+
+  const filteredBands = bandsData.filter((band) =>
+    band.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    band.genre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <main className="bands-page">
+
+      <section className="page-header">
+
+        <div className="small-title">
+          ♡ MY MUSIC COLLECTION
+        </div>
+
+        <h1>
+          วงดนตรีที่ชื่นชอบ
+        </h1>
+
+        <p>
+          Favorite Bands (รายการโปรด {favoriteIds.length} วง)
+        </p>
+
+        {/* ช่องค้นหา */}
+        <div style={{ marginTop: '16px', marginBottom: '8px' }}>
+          <input
+            type="text"
+            placeholder="ค้นหาชื่อวงดนตรี หรือแนวเพลง..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              padding: '10px 16px',
+              borderRadius: '20px',
+              border: '1px solid #ddd',
+              width: '100%',
+              maxWidth: '320px',
+              fontSize: '0.95rem',
+              outline: 'none'
+            }}
+          />
+        </div>
+
+        <div className="pink-line" />
+
       </section>
+
+      <section className="band-grid">
+        {filteredBands.length > 0 ? (
+          filteredBands.map((band) => (
+            <BandCard
+              key={band.id}
+              band={band}
+              isFavorite={favoriteIds.includes(band.id)}
+              likes={likesMap[band.id] || 0}
+              onToggleFavorite={handleToggleFavorite}
+              onLike={handleLike}
+            />
+          ))
+        ) : (
+          <p style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>
+            ไม่พบข้อมูลวงดนตรีที่ค้นหา
+          </p>
+        )}
+      </section>
+
     </main>
   );
 }

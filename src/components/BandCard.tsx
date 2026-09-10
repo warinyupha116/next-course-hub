@@ -1,6 +1,21 @@
-import { Band } from "../type/bands";
+import type { Band } from "../type/bands";
 
-export default function BandCard({ band }: { band: Band }) {
+// เติม Type สำหรับรับ Props เพิ่มเติมจาก Parent (BandExplorer)
+type BandCardProps = {
+  band: Band;
+  isFollowing?: boolean;
+  likes?: number;
+  onToggleFollow?: (id: number) => void;
+  onLike?: (id: number) => void;
+};
+
+export default function BandCard({
+  band,
+  isFollowing = false,
+  likes = 0,
+  onToggleFollow,
+  onLike,
+}: BandCardProps) {
   if (!band) return null;
 
   return (
@@ -21,7 +36,7 @@ export default function BandCard({ band }: { band: Band }) {
         
         <div>
           <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-            สมาชิกในวง
+            สมาชิกในวง ({band.members ? band.members.length : 0} คน)
           </h4>
           <div className="grid grid-cols-1 gap-2">
             {band.members && band.members.map((member) => (
@@ -49,6 +64,33 @@ export default function BandCard({ band }: { band: Band }) {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* ส่วนที่เติมเพิ่ม: ปุ่มติดตาม และ ปุ่ม Like */}
+      <div className="flex gap-3 mt-6 pt-4 border-t border-gray-100">
+        <button
+          type="button"
+          aria-pressed={isFollowing}
+          onClick={() => onToggleFollow?.(band.id)}
+          className={`flex-1 py-2 px-4 rounded-lg font-medium text-sm transition-colors ${
+            isFollowing
+              ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+              : "bg-emerald-600 text-white hover:bg-emerald-700"
+          }`}
+        >
+          {isFollowing ? "💚 กำลังติดตาม" : "➕ ติดตาม"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onLike?.(band.id)}
+          className="flex items-center gap-1.5 py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium text-sm transition-colors"
+        >
+          <span>👍 Like</span>
+          <span className="bg-white px-2 py-0.5 rounded-full text-xs font-bold text-gray-600">
+            {likes}
+          </span>
+        </button>
       </div>
     </div>
   );
