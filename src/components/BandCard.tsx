@@ -66,7 +66,7 @@ export default function BandCard({
         </div>
       </div>
 
-      {/* ส่วนที่เติมเพิ่ม: ปุ่มติดตาม และ ปุ่ม Like */}
+     
       <div className="flex gap-3 mt-6 pt-4 border-t border-gray-100">
         <button
           type="button"

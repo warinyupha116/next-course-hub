@@ -9,17 +9,18 @@ type CourseExplorerProps = {
 };
 
 export default function CourseExplorer({ courses = [] }: CourseExplorerProps) {
-  const [keyword, setKeyword] = useState<string>("");
-  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+  const [keyword, setKeyword] = useState<string>(""); //ค้นหา
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]); //id ที่ชอบ
 
   function handleKeywordChange(event: ChangeEvent<HTMLInputElement>) {
     setKeyword(event.target.value);
   }
 
+  //ค้นหา Derived State คำนวณผลลัพธ์การค้นหารายวิชา
   function handleToggleFavorite(id: number) {
     setFavoriteIds((prevIds) =>
-      prevIds.includes(id)
-        ? prevIds.filter((favoriteId) => favoriteId !== id)
+      prevIds.includes(id) //includesชอบ
+        ? prevIds.filter((favoriteId) => favoriteId !== id) //filterลบรายการที่กด
         : [...prevIds, id]
     );
   }
@@ -27,8 +28,9 @@ export default function CourseExplorer({ courses = [] }: CourseExplorerProps) {
   const searchText = keyword.trim().toLowerCase();
   const safeCourses = Array.isArray(courses) ? courses : [];
   const visibleCourses = safeCourses.filter(
+    //visibleCourses เช็คตัวที่มีในคำค้นหา
     (course) =>
-      course.title.toLowerCase().includes(searchText) ||
+      ((course as { title?: string }).title || course.name).toLowerCase().includes(searchText) ||
       course.code.includes(searchText)
   );
 
@@ -53,8 +55,8 @@ export default function CourseExplorer({ courses = [] }: CourseExplorerProps) {
             <CourseCard
               key={course.id}
               course={course}
-              isFavorite={favoriteIds.includes(course.id)}
-              onToggleFavorite={handleToggleFavorite}
+              isFavorite={favoriteIds.includes(Number(course.id))}
+              onToggleFavorite={(id) => handleToggleFavorite(Number(id))}
             />
           ))}
         </section>

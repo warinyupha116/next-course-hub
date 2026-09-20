@@ -4,7 +4,7 @@ export default function AboutPage() {
       <h1>เกี่ยวกับ Student Course Hub</h1>
       <p>
         Student Course Hub เป็นเว็บไซต์สำหรับรวบรวมข้อมูลรายวิชา 
-        เพื่อให้นักศึกษาสามารถดูรายละเอียดรายวิชาได้อย่างสะดวก
+        เพื่อให้นักศึกษาสามารถดูรายละเอียดรายวิชา
       </p>
 
       <section style={{ marginTop: '20px' }}>

@@ -187,7 +187,7 @@ export default function BandsPage() {
     }));
   }
 
-  // ประกาศตัวแปร filteredBands เพื่อกรองวงดนตรี
+ 
   const filteredBands = bandsData.filter((band) =>
     band.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     band.genre.toLowerCase().includes(searchTerm.toLowerCase())
@@ -203,7 +203,7 @@ export default function BandsPage() {
         <div style={{ marginTop: '16px', marginBottom: '8px' }}>
           <input
             type="text"
-            placeholder="ค้นหาชื่อวงดนตรี หรือแนวเพลง..."
+            placeholder="ค้นหาชื่อวงดนตรี "
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
@@ -221,7 +221,7 @@ export default function BandsPage() {
         <div className="pink-line" />
       </section>
 
-      {/* Cards & Empty State */}
+    
       <section className="band-grid">
         {filteredBands.length > 0 ? (
           filteredBands.map((band) => (

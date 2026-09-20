@@ -13,7 +13,7 @@ export default function BandExplorer({ bands = [] }: BandExplorerProps) {
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [likesMap, setLikesMap] = useState<Record<number, number>>({});
 
-  function handleKeywordChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleKeywordChange(event: ChangeEvent<HTMLInputElement>) {//handleKeywordChange กดปุ่มหัวจายยยย
     setKeyword(event.target.value);
   }
 
@@ -36,6 +36,7 @@ export default function BandExplorer({ bands = [] }: BandExplorerProps) {
     setKeyword("");
   }
 
+  //ดูคำค้นทีละตัว
   const searchText = keyword.trim().toLowerCase();
   const safeBands = Array.isArray(bands) ? bands : [];
   const visibleBands = safeBands.filter((band) =>
@@ -64,7 +65,7 @@ export default function BandExplorer({ bands = [] }: BandExplorerProps) {
         <p>ไม่พบวงดนตรีที่ตรงกับเงื่อนไข</p>
       ) : (
         <section>
-          {visibleBands.map((band) => (
+          {visibleBands.map((band) => (//visibleCourses เช็คตัวที่มีในคำค้นหา
             <BandCard
               key={band.id}
               band={band}
